@@ -579,9 +579,6 @@ Mat3 Quaternion::convert_to_matrix3x3() const {
 	}
 	else {
 		float rlength2;
-		// normalize quat if required.
-		// We can avoid the expensive sqrt in this case since all 'coefficients' below are products of two q components.
-		// That is a square of a square root, so it is possible to avoid that
 		if (length2 != 1.0f)
 		{
 			rlength2 = 2.0f / length2;
@@ -591,13 +588,8 @@ Mat3 Quaternion::convert_to_matrix3x3() const {
 			rlength2 = 2.0f;
 		}
 
-		// Source: Gamasutra, Rotating Objects Using Quaternions
-		//
-		//http://www.gamasutra.com/features/19980703/quaternions_01.htm
-
 		float wx, wy, wz, xx, yy, yz, xy, xz, zz, x2, y2, z2;
 
-		// calculate coefficients
 		x2 = rlength2*x;
 		y2 = rlength2*y;
 		z2 = rlength2*z;
@@ -613,12 +605,6 @@ Mat3 Quaternion::convert_to_matrix3x3() const {
 		wx = w * x2;
 		wy = w * y2;
 		wz = w * z2;
-
-		// Note. Gamasutra gets the matrix assignments inverted, resulting
-		// in left-handed rotations, which is contrary to OpenGL and OSG's 
-		// methodology. The matrix assignment has been altered in the next
-		// few lines of code to do the right thing.
-		// Don Burns - Oct 13, 2001
 
 		m[0][0] = 1.0f - (yy + zz);
 		m[1][0] = xy - wz;
@@ -658,9 +644,6 @@ Mat4 Quaternion::convert_to_matrix4x4() const {
 	}
 	else {
 		float rlength2;
-		// normalize quat if required.
-		// We can avoid the expensive sqrt in this case since all 'coefficients' below are products of two q components.
-		// That is a square of a square root, so it is possible to avoid that
 		if (length2 != 1.0f)
 		{
 			rlength2 = 2.0f / length2;
@@ -670,13 +653,8 @@ Mat4 Quaternion::convert_to_matrix4x4() const {
 			rlength2 = 2.0f;
 		}
 
-		// Source: Gamasutra, Rotating Objects Using Quaternions
-		//
-		//http://www.gamasutra.com/features/19980703/quaternions_01.htm
-
 		float wx, wy, wz, xx, yy, yz, xy, xz, zz, x2, y2, z2;
 
-		// calculate coefficients
 		x2 = rlength2*x;
 		y2 = rlength2*y;
 		z2 = rlength2*z;
@@ -692,12 +670,6 @@ Mat4 Quaternion::convert_to_matrix4x4() const {
 		wx = w * x2;
 		wy = w * y2;
 		wz = w * z2;
-
-		// Note. Gamasutra gets the matrix assignments inverted, resulting
-		// in left-handed rotations, which is contrary to OpenGL and OSG's 
-		// methodology. The matrix assignment has been altered in the next
-		// few lines of code to do the right thing.
-		// Don Burns - Oct 13, 2001
 
 		m[0][0] = 1.0f - (yy + zz);
 		m[1][0] = xy - wz;
